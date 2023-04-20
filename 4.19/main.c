@@ -49,7 +49,7 @@ int main()
 	if(id == 0)
 	{
 		//子进程
-		int cnt = 5;
+		int cnt = 20;
 		while(cnt--)
 		{
 			printf("子进程在运行,pid:%d, ppid:%d\n", getpid(), getppid());
@@ -62,7 +62,16 @@ int main()
 		//父进程
 		int status = 0;
 		pid_t ret = waitpid(id, &status, 0);//阻塞式等待
-		
+		printf("我是父进程，我在等待子进程退出,退出码：%d, 退出信号：%d\n", (status >> 8) & 0xFF, status & 0x7F);
+		if(WIFEXITED(status) == 0)
+		{
+			//异常终止
+			printf("子进程异常终止，退出码:%d，退出信号:%d\n", WEXITSTATUS(status), status&0x7F);
+		}
+		else //正常终止
+		{
+			printf("子进程正常终止，退出码:%d, 退出信号:%d\n", WEXITSTATUS(status), status&0x7F);
+		}
 	}
 
 	return 0;
