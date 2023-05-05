@@ -1,0 +1,8 @@
+printf->stdout
+fprintf->stdout
+I am printf
+I am printf
+I am printf
+I am printf
+I am printf
+I am printf
